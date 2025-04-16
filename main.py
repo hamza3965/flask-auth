@@ -83,6 +83,7 @@ def login():
         user = db.session.execute(db.select(User).where(User.email == email)).scalar()
         if not user or not check_password_hash(user.password, password):
             flash('Authentication failed. The system detected invalid credentials. 🛑', "danger")
+            return redirect(url_for('login'))
         else:
             login_user(user)
             flash(f'Access granted, Agent {current_user.name} 🔐', "success")
